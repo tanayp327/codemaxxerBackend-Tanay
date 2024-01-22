@@ -65,6 +65,9 @@ public class Person {
     @ManyToMany(fetch = EAGER)
     private Collection<PersonRole> roles = new ArrayList<>();
 
+    private int csaPoints;
+    private int cspPoints;
+
     /* HashMap is used to store JSON for daily "stats"
     "stats": {
         "2022-11-13": {
@@ -79,14 +82,16 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name) {
+    public Person(String email, String password, String name, int csaPoints, int cspPoints) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.csaPoints = csaPoints;
+        this.cspPoints = cspPoints;
     }
 
 
-    // Initialize static test data 
+    // Initialize static test data
     public static Person[] init() {
 
         // basics of class construction
@@ -94,30 +99,40 @@ public class Person {
         p1.setName("Thomas Edison");
         p1.setEmail("toby@gmail.com");
         p1.setPassword("123Toby!");
+        p1.setCsaPoints(0);
+        p1.setCspPoints(0);
 
 
         Person p2 = new Person();
         p2.setName("Alexander Graham Bell");
         p2.setEmail("lexb@gmail.com");
         p2.setPassword("123LexB!");
+        p2.setCsaPoints(0);
+        p2.setCspPoints(0);
 
 
         Person p3 = new Person();
         p3.setName("Nikola Tesla");
         p3.setEmail("niko@gmail.com");
         p3.setPassword("123Niko!");
+        p3.setCsaPoints(0);
+        p3.setCspPoints(0);
 
 
         Person p4 = new Person();
         p4.setName("Madam Currie");
         p4.setEmail("madam@gmail.com");
         p4.setPassword("123Madam!");
+        p4.setCsaPoints(0);
+        p4.setCspPoints(0);
 
 
         Person p5 = new Person();
         p5.setName("John Mortensen");
         p5.setEmail("jm1021@gmail.com");
         p5.setPassword("123Qwerty!");
+        p5.setCsaPoints(0);
+        p5.setCspPoints(0);
 
 
         // Array definition and data initialization

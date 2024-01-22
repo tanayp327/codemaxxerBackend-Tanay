@@ -1,7 +1,4 @@
 package com.nighthawk.spring_portfolio.mvc.person;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,8 +90,10 @@ public class PersonApiController {
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
                                              @RequestParam("password") String password,
                                              @RequestParam("name") String name) {
+        int csaPoints = 0;
+        int cspPoints = 0;
         // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name);
+        Person person = new Person(email, password, name, csaPoints, cspPoints);
         personDetailsService.save(person);
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
     }

@@ -21,7 +21,8 @@ public class Person extends Generics{
     private String uid;  // user / person id
     private String password;
     private String name;
-    private Date dob;
+    private int csaPoints;
+    private int cspPoints;
     
 
     // Constructor with zero arguments
@@ -30,12 +31,13 @@ public class Person extends Generics{
     }
 
     // Constructor used when building object from an API
-    public Person(String uid, String password, String name, Date dob) {
+    public Person(String uid, String password, String name, int csaPoints, int cspPoints) {
         this();  // runs zero argument constructor
         this.uid = uid;
         this.password = password;
         this.name = name;
-        this.dob = dob;
+        this.csaPoints = csaPoints;
+        this.cspPoints = cspPoints;
     }
 
     /* 'Generics' requires getKey to help enforce KeyTypes usage */
@@ -49,21 +51,21 @@ public class Person extends Generics{
     /* 'Generics' requires toString override
 	 * toString provides data based off of Static Key setting
 	 */
-	@Override
-	public String toString() {		
-		String output="";
-		if (KeyType.uid.equals(this.getKey())) {
-			output += this.uid;
-		} else if (KeyType.name.equals(this.getKey())) {
-			output += this.name;
-		} else if (KeyType.age.equals(this.getKey())) {
-			output += "0000" + this.getAge();  // pads integer 1,100,11,2 to 0001,0100,0011,0002
-			output = output.substring(output.length() - 4);
-		} else {
-			output = super.getType() + ": " + this.uid + ", " + this.name + ", " + this.getAge();
-		}
-		return output;
-	}
+    @Override
+    public String toString() {		
+        String output="";
+        if (KeyType.uid.equals(this.getKey())) {
+            output += this.uid;
+        } else if (KeyType.name.equals(this.getKey())) {
+            output += this.name;
+        } else {
+            output = super.getType() + ": " + this.uid + ", " + this.name;
+            output += ", csaPoints=" + this.csaPoints;  // Include the csaPoints field
+            output += ", cspPoints=" + this.cspPoints;   // Include the
+        }
+        return output;
+    }
+    
 
     public void setUid(String uid) {
         this.uid = uid;
@@ -85,20 +87,20 @@ public class Person extends Generics{
         this.name = name;
     }
 
-    public Date getDob() {
-        return dob;
+    public int getCsaPoints() {
+        return csaPoints;
+    }
+    
+    public void setCsaPoints(int csaPoints) {
+        this.csaPoints = csaPoints;
     }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public int getCspPoints() {
+        return cspPoints;
     }
 
-    // A custom getter to return age from dob attribute
-    public int getAge() {
-        if (this.dob != null) {
-            LocalDate birthDay = this.dob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            return Period.between(birthDay, LocalDate.now()).getYears(); }
-        return -1;
+    public void setCspPoints(int cspPoints) {
+        this.cspPoints = cspPoints;
     }
 
     // Initialize static test data 
@@ -109,33 +111,22 @@ public class Person extends Generics{
         p1.setName("Thomas Edison");
         p1.setUid("toby@gmail.com");
         p1.setPassword("123Toby!");
-        // adding Note to notes collection
-        try {  // All data that converts formats could fail
-            Date d = new SimpleDateFormat("MM-dd-yyyy").parse("01-01-1840");
-            p1.setDob(d);
-        } catch (Exception e) {
-            // no actions as dob default is good enough
-        }
+        p1.setCsaPoints(0);
+        p1.setCspPoints(0);
 
         Person p2 = new Person();
         p2.setName("Alexander Graham Bell");
         p2.setUid("lexb@gmail.com");
         p2.setPassword("123LexB!");
-        try {
-            Date d = new SimpleDateFormat("MM-dd-yyyy").parse("01-01-1845");
-            p2.setDob(d);
-        } catch (Exception e) {
-        }
+        p2.setCsaPoints(0);
+        p2.setCspPoints(0);
 
         Person p3 = new Person();
         p3.setName("Nikola Tesla");
         p3.setUid("niko@gmail.com");
         p3.setPassword("123Niko!");
-        try {
-            Date d = new SimpleDateFormat("MM-dd-yyyy").parse("01-01-1850");
-            p3.setDob(d);
-        } catch (Exception e) {
-        }
+        p3.setCsaPoints(0);
+        p3.setCspPoints(0);
 
         Person p4 = null;
         Person p5 = null;
@@ -143,15 +134,17 @@ public class Person extends Generics{
             p4 = new Person(
                 "madam@gmail.com",
                 "123Madam!",
-                "Madam Currie", 
-                new SimpleDateFormat("MM-dd-yyyy").parse("01-01-2023")
+                "Madam Currie",
+                0,
+                0
             );
     
             p5 = new Person(
-                "jm1021@gmail.com", 
+                "jm1021@gmail.com",
                 "123Qwerty!",
                 "John Mortensen",
-                new SimpleDateFormat("MM-dd-yyyy").parse("10-21-1959")
+                0,
+                0
             );
         } catch (Exception e) {
         }
