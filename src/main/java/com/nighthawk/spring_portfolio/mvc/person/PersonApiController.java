@@ -53,7 +53,6 @@ public class PersonApiController {
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
 
-
     /*
     GET individual Person using ID
      */
@@ -143,5 +142,25 @@ public class PersonApiController {
         }
         // return Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+    }
+
+    @PostMapping("/addPointsCSA")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Person> addPointsCSA(@RequestParam("points") int points) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Person person = repository.findByEmail(username);  // Retrieve data for the authenticated user
+        person.setCsaPoints(person.getCsaPoints() + points);
+        repository.save(person);
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
+
+    @PostMapping("/addPointsCSP")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Person> addPointsCSP(@RequestParam("points") int points) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Person person = repository.findByEmail(username);  // Retrieve data for the authenticated user
+        person.setCsaPoints(person.getCspPoints() + points);
+        repository.save(person);
+        return new ResponseEntity<>(person, HttpStatus.OK);
     }
 }
