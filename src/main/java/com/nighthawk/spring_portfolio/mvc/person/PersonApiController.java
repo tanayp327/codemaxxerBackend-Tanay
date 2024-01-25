@@ -64,7 +64,19 @@ public class PersonApiController {
             return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
         }
         // Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping("/leaderboardCSP")
+    public List<Person> getLeaderboardCSP() {
+        // Get top 5 users based on cspPoints
+        return repository.findTop5ByOrderByCspPointsDesc();
+    }
+
+    @GetMapping("/leaderboardCSA")
+    public List<Person> getLeaderboardCSA() {
+        // Get top 5 users based on cspPoints
+        return repository.findTop5ByOrderByCsaPointsDesc();
     }
 
     /*
