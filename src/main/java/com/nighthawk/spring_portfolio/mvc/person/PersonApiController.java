@@ -103,8 +103,9 @@ public class PersonApiController {
                                              @RequestParam("name") String name) {
         int csaPoints = 0;
         int cspPoints = 0;
+        int profilePicInt = 0;
         // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name, csaPoints, cspPoints);
+        Person person = new Person(email, password, name, csaPoints, cspPoints, profilePicInt);
         personDetailsService.save(person);
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
     }
@@ -172,6 +173,16 @@ public class PersonApiController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Person person = repository.findByEmail(username);  // Retrieve data for the authenticated user
         person.setCsaPoints(person.getCspPoints() + points);
+        repository.save(person);
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
+
+    @PostMapping("/changeProfilePic")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Person> changeProfilePic(@RequestParam("profilePicInt") int profilePicInt) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Person person = repository.findByEmail(username);
+        person.setProfilePicInt(profilePicInt);
         repository.save(person);
         return new ResponseEntity<>(person, HttpStatus.OK);
     }

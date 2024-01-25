@@ -67,6 +67,7 @@ public class Person {
 
     private int csaPoints;
     private int cspPoints;
+    private int profilePicInt;
 
     /* HashMap is used to store JSON for daily "stats"
     "stats": {
@@ -82,12 +83,13 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, int csaPoints, int cspPoints) {
+    public Person(String email, String password, String name, int csaPoints, int cspPoints, int profilePicInt) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.csaPoints = csaPoints;
         this.cspPoints = cspPoints;
+        this.profilePicInt = profilePicInt;
     }
 
 
@@ -101,7 +103,7 @@ public class Person {
         p1.setPassword("123Toby!");
         p1.setCsaPoints(0);
         p1.setCspPoints(0);
-
+        p1.setProfilePicInt(0);
 
         Person p2 = new Person();
         p2.setName("Alexander Graham Bell");
@@ -109,7 +111,7 @@ public class Person {
         p2.setPassword("123LexB!");
         p2.setCsaPoints(0);
         p2.setCspPoints(0);
-
+        p2.setProfilePicInt(0);
 
         Person p3 = new Person();
         p3.setName("Nikola Tesla");
@@ -117,7 +119,7 @@ public class Person {
         p3.setPassword("123Niko!");
         p3.setCsaPoints(0);
         p3.setCspPoints(0);
-
+        p3.setProfilePicInt(0);
 
         Person p4 = new Person();
         p4.setName("Madam Currie");
@@ -125,7 +127,7 @@ public class Person {
         p4.setPassword("123Madam!");
         p4.setCsaPoints(0);
         p4.setCspPoints(0);
-
+        p4.setProfilePicInt(0);
 
         Person p5 = new Person();
         p5.setName("John Mortensen");
@@ -133,7 +135,7 @@ public class Person {
         p5.setPassword("123Qwerty!");
         p5.setCsaPoints(0);
         p5.setCspPoints(0);
-
+        p5.setProfilePicInt(0);
 
         // Array definition and data initialization
         Person persons[] = {p1, p2, p3, p4, p5};
