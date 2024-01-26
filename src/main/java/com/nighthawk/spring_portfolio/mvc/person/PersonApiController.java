@@ -94,6 +94,8 @@ public class PersonApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
     }
 
+    @DeleteMapping()
+
     /*
     POST Aa record by Requesting Parameters from URI
      */
