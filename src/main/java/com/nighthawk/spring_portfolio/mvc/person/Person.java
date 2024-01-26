@@ -61,10 +61,10 @@ public class Person {
     @Size(min = 2, max = 30, message = "Name (2 to 30 chars)")
     private String name;
 
-    // To be implemented
     @ManyToMany(fetch = EAGER)
     private Collection<PersonRole> roles = new ArrayList<>();
 
+    
     private int csaPoints;
     private int cspPoints;
     private int profilePicInt;
@@ -145,8 +145,16 @@ public class Person {
         p6.setCspPoints(0);
         p6.setProfilePicInt(0);
 
+        Person p7 = new Person();
+        p7.setName("TestPlayer");
+        p7.setEmail("testPlayer@gmail.com");
+        p7.setPassword("123TestPlayer!");
+        p7.setCsaPoints(0);
+        p7.setCspPoints(0);
+        p7.setProfilePicInt(0);
+
         // Array definition and data initialization
-        Person persons[] = {p1, p2, p3, p4, p5, p6};
+        Person persons[] = {p1, p2, p3, p4, p5, p6, p7};
         return(persons);
     }
 
