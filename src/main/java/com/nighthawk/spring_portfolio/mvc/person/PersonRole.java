@@ -17,4 +17,15 @@ public class PersonRole {
 
     @Column(unique=true)
     private String name;
+
+    public PersonRole(String name) {
+        this.name = name;
+    }
+
+    public static PersonRole[] init() {
+        PersonRole player = new PersonRole("ROLE_PLAYER");
+        PersonRole admin = new PersonRole("ROLE_ADMIN");
+        PersonRole[] initArray = {player, admin};
+        return initArray;
+    }
 }

@@ -1,12 +1,5 @@
 package com.nighthawk.hacks.classDataStruct;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-
-
 /*
 Adapted from Person POJO, Plain Old Java Object.
  */
@@ -23,6 +16,7 @@ public class Person extends Generics{
     private String name;
     private int csaPoints;
     private int cspPoints;
+    private int profilePicInt;
     
 
     // Constructor with zero arguments
@@ -31,13 +25,14 @@ public class Person extends Generics{
     }
 
     // Constructor used when building object from an API
-    public Person(String uid, String password, String name, int csaPoints, int cspPoints) {
+    public Person(String uid, String password, String name, int csaPoints, int cspPoints, int profilePicInt) {
         this();  // runs zero argument constructor
         this.uid = uid;
         this.password = password;
         this.name = name;
         this.csaPoints = csaPoints;
         this.cspPoints = cspPoints;
+        this.profilePicInt = profilePicInt;
     }
 
     /* 'Generics' requires getKey to help enforce KeyTypes usage */
@@ -60,8 +55,10 @@ public class Person extends Generics{
             output += this.name;
         } else {
             output = super.getType() + ": " + this.uid + ", " + this.name;
-            output += ", csaPoints=" + this.csaPoints;  // Include the csaPoints field
-            output += ", cspPoints=" + this.cspPoints;   // Include the
+            output += ", csaPoints=" + this.csaPoints;
+            output += ", cspPoints=" + this.cspPoints;
+            output += ", profilePicInt=" + this.profilePicInt;
+
         }
         return output;
     }
@@ -103,6 +100,14 @@ public class Person extends Generics{
         this.cspPoints = cspPoints;
     }
 
+    public int getProfilePicInt() {
+        return profilePicInt;
+    }
+
+    public void setProfilePicInt(int profilePicInt) {
+        this.profilePicInt = profilePicInt;
+    }
+
     // Initialize static test data 
     public static Person[] init() {
 
@@ -113,6 +118,7 @@ public class Person extends Generics{
         p1.setPassword("123Toby!");
         p1.setCsaPoints(0);
         p1.setCspPoints(0);
+        p1.setProfilePicInt(0);
 
         Person p2 = new Person();
         p2.setName("Alexander Graham Bell");
@@ -120,6 +126,7 @@ public class Person extends Generics{
         p2.setPassword("123LexB!");
         p2.setCsaPoints(0);
         p2.setCspPoints(0);
+        p2.setProfilePicInt(0);
 
         Person p3 = new Person();
         p3.setName("Nikola Tesla");
@@ -127,6 +134,7 @@ public class Person extends Generics{
         p3.setPassword("123Niko!");
         p3.setCsaPoints(0);
         p3.setCspPoints(0);
+        p3.setProfilePicInt(0);
 
         Person p4 = null;
         Person p5 = null;
@@ -136,6 +144,7 @@ public class Person extends Generics{
                 "123Madam!",
                 "Madam Currie",
                 0,
+                0,
                 0
             );
     
@@ -143,6 +152,7 @@ public class Person extends Generics{
                 "jm1021@gmail.com",
                 "123Qwerty!",
                 "John Mortensen",
+                0,
                 0,
                 0
             );
