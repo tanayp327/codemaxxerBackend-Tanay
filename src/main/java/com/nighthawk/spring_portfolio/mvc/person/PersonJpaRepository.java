@@ -34,17 +34,18 @@ public interface PersonJpaRepository extends JpaRepository<Person, Long> {
       https://www.baeldung.com/spring-data-jpa-query
     */
 
-    // Query method to get top 5 users based on cspPoints
     List<Person> findTop5ByOrderByCspPointsDesc();
 
     List<Person> findTop5ByOrderByCsaPointsDesc();
 
+    // You can use no query or query
+
     @Query("SELECT p FROM Person p ORDER BY p.cspPoints DESC")
     List<Person> findTop5ByCspPoints();
 
-    // Query method to get top 5 users based on cspPoints
     @Query("SELECT p FROM Person p ORDER BY p.csaPoints DESC")
     List<Person> findTop5ByCsaPoints();
+
 }
 
 
