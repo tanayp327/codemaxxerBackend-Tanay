@@ -98,47 +98,55 @@ public class Person {
 
         // basics of class construction
         Person p1 = new Person();
-        p1.setName("Thomas Edison");
-        p1.setEmail("toby@gmail.com");
-        p1.setPassword("123Toby!");
+        p1.setName("Theo Huntalas");
+        p1.setEmail("theo@gmail.com");
+        p1.setPassword("123Theo!");
         p1.setCsaPoints(0);
         p1.setCspPoints(0);
         p1.setProfilePicInt(0);
 
         Person p2 = new Person();
-        p2.setName("Alexander Graham Bell");
-        p2.setEmail("lexb@gmail.com");
-        p2.setPassword("123LexB!");
+        p2.setName("Justin Nguyen");
+        p2.setEmail("justin@gmail.com");
+        p2.setPassword("123Justin!");
         p2.setCsaPoints(0);
         p2.setCspPoints(0);
         p2.setProfilePicInt(0);
 
         Person p3 = new Person();
-        p3.setName("Nikola Tesla");
-        p3.setEmail("niko@gmail.com");
-        p3.setPassword("123Niko!");
+        p3.setName("Finn Carpenter");
+        p3.setEmail("finn@gmail.com");
+        p3.setPassword("123Finn!");
         p3.setCsaPoints(0);
         p3.setCspPoints(0);
         p3.setProfilePicInt(0);
 
         Person p4 = new Person();
-        p4.setName("Madam Currie");
-        p4.setEmail("madam@gmail.com");
-        p4.setPassword("123Madam!");
+        p4.setName("Rachit Jaiswal");
+        p4.setEmail("rachit@gmail.com");
+        p4.setPassword("123Rachit!");
         p4.setCsaPoints(0);
         p4.setCspPoints(0);
         p4.setProfilePicInt(0);
 
         Person p5 = new Person();
-        p5.setName("John Mortensen");
-        p5.setEmail("jm1021@gmail.com");
-        p5.setPassword("123Qwerty!");
+        p5.setName("Luna Iwazaki");
+        p5.setEmail("luna@gmail.com");
+        p5.setPassword("123Luna!");
         p5.setCsaPoints(0);
         p5.setCspPoints(0);
         p5.setProfilePicInt(0);
 
+        Person p6 = new Person();
+        p6.setName("Tanisha Patil");
+        p6.setEmail("tanisha@gmail.com");
+        p6.setPassword("123Tanisha!");
+        p6.setCsaPoints(0);
+        p6.setCspPoints(0);
+        p6.setProfilePicInt(0);
+
         // Array definition and data initialization
-        Person persons[] = {p1, p2, p3, p4, p5};
+        Person persons[] = {p1, p2, p3, p4, p5, p6};
         return(persons);
     }
 
