@@ -94,22 +94,34 @@ public class PersonApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
     }
 
-    @DeleteMapping()
-
     /*
     POST Aa record by Requesting Parameters from URI
      */
-    @PostMapping( "/post")
+    @PostMapping("/post")
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
                                              @RequestParam("password") String password,
                                              @RequestParam("name") String name) {
+    
+        // Check if a person with the same name already exists
+        Person existingPerson = personDetailsService.getByName(name);
+        if (existingPerson != null) {
+            return new ResponseEntity<>("User with name " + name + " already exists", HttpStatus.BAD_REQUEST);
+        }
+
+        // Check if a person with the same email already exists
+        Person existingPersonByEmail = personDetailsService.getByEmail(email);
+        if (existingPersonByEmail != null) {
+            return new ResponseEntity<>("User with email " + email + " already exists", HttpStatus.BAD_REQUEST);
+        }
+    
+        // If no existing person with the same name, create and save the new person
         int csaPoints = 0;
         int cspPoints = 0;
         int profilePicInt = 0;
-        // A person object WITHOUT ID will create a new record with default roles as student
         Person person = new Person(email, password, name, csaPoints, cspPoints, profilePicInt);
         personDetailsService.save(person);
-        return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
+    
+        return new ResponseEntity<>(email + " is created successfully", HttpStatus.CREATED);
     }
 
     /*
