@@ -23,22 +23,26 @@
         <div class="container bg-secondary py-4">
             <div class="p-5 mb-4 bg-light text-dark rounded-3">
                 <h1>Login</h1>
-                <label for="email">Username:</label><br>
-                <input type="text" id="username" name="username"><br>
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" required><br>
                 <label for="password">Password:</label><br>
-                <input type="text" id="password" name="password"><br><br>
+                <input type="text" id="password" name="password" required><br><br>
                 <input type="submit" value="Login" onclick="login()">
                 <p id="message"></p>
             </div>
         </div>
         <script>
             function login() {
-                var email = document.getElementById('username').value;
+                var email = document.getElementById('email').value;
                 var password = document.getElementById('password').value;
+                if (email === "" || password === "") {
+                    document.getElementById('message').innerHTML = "Please enter both email and password.";
+                    return;
+                }
                 var data = {email:email, password:password};
                 fetch("/authenticate", {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}).then((data) => {
                     if (data.status == 200) {
-                        window.location.replace("/mvc/person/read");
+                        window.location.replace("http://localhost:8032/reading");
                     } else {
                         document.getElementById('message').innerHTML = "Invalid email or password"
                     }
