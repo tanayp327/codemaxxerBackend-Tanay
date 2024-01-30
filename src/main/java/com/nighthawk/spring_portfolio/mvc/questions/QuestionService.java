@@ -15,5 +15,13 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
+    @Autowired
+    private CustomQuestionRepository customQuestionRepository;
+
+    public List<Question> getQuestionsByCourse(String courseName) {
+        return customQuestionRepository.findByCourse(courseName);
+    }
+
+
     // Other business logic methods
 }
