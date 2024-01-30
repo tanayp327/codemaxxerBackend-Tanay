@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+import com.nighthawk.spring_portfolio.mvc.enemy.Enemy;
+import com.nighthawk.spring_portfolio.mvc.enemy.EnemyJPA;
 import com.nighthawk.spring_portfolio.mvc.jokes.Jokes;
 import com.nighthawk.spring_portfolio.mvc.jokes.JokesJpaRepository;
 import com.nighthawk.spring_portfolio.mvc.note.Note;
@@ -24,6 +26,7 @@ public class ModelInit {
     @Autowired NoteJpaRepository noteRepo;
     @Autowired PersonDetailsService personService;
     @Autowired PersonRoleJpaRepository roleRepo;
+    @Autowired EnemyJPA enemyRepo; // Add enemy repository
 
     @Bean
     CommandLineRunner run() {  // The run() method will be executed after the application starts
@@ -50,6 +53,14 @@ public class ModelInit {
                 }
             }
 
+            List<Enemy> enemyList = Enemy.init(); // Initialize the list of enemies
+            for (Enemy enemy : enemyList) {
+                Enemy existingEnemy = enemyRepo.findByName(enemy.getName());
+                if (existingEnemy == null) {
+                    enemyRepo.save(enemy);
+                }
+            }
+
             // Person database is populated with test data
             Person[] personArray = Person.init();
             for (Person person : personArray) {
@@ -72,6 +83,7 @@ public class ModelInit {
             personService.addRoleToPerson(personArray[3].getEmail(), "ROLE_ADMIN");
             personService.addRoleToPerson(personArray[4].getEmail(), "ROLE_ADMIN");
             personService.addRoleToPerson(personArray[5].getEmail(), "ROLE_ADMIN");
+            
         };
     }
 }
