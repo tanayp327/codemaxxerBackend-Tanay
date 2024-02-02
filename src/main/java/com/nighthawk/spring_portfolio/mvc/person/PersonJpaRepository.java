@@ -1,9 +1,9 @@
 package com.nighthawk.spring_portfolio.mvc.person;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 /*
 Extends the JpaRepository interface from Spring Data JPA.
@@ -13,6 +13,8 @@ Extends the JpaRepository interface from Spring Data JPA.
  */
 public interface PersonJpaRepository extends JpaRepository<Person, Long> {
     Person findByEmail(String email);
+
+    Person findByName(String name);
 
     List<Person> findAllByOrderByNameAsc();
 
@@ -33,4 +35,21 @@ public interface PersonJpaRepository extends JpaRepository<Person, Long> {
     /*
       https://www.baeldung.com/spring-data-jpa-query
     */
+
+    List<Person> findTop5ByOrderByCspPointsDesc();
+
+    List<Person> findTop5ByOrderByCsaPointsDesc();
+
+    // You can use no query or query
+
+    @Query("SELECT p FROM Person p ORDER BY p.cspPoints DESC")
+    List<Person> findTop5ByCspPoints();
+
+    @Query("SELECT p FROM Person p ORDER BY p.csaPoints DESC")
+    List<Person> findTop5ByCsaPoints();
+
 }
+
+
+
+

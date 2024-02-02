@@ -84,6 +84,10 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
         return (personJpaRepository.findByEmail(email));
     }
 
+    public Person getByName(String name) {
+        return personJpaRepository.findByName(name);
+    }
+
     public void delete(long id) {
         personJpaRepository.deleteById(id);
     }

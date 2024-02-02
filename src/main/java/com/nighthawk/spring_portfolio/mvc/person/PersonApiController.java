@@ -1,7 +1,4 @@
 package com.nighthawk.spring_portfolio.mvc.person;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +53,6 @@ public class PersonApiController {
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
 
-
     /*
     GET individual Person using ID
      */
@@ -68,7 +64,19 @@ public class PersonApiController {
             return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
         }
         // Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping("/leaderboardCSP")
+    public List<Person> getLeaderboardCSP() {
+        // Get top 5 users based on cspPoints
+        return repository.findTop5ByOrderByCspPointsDesc();
+    }
+
+    @GetMapping("/leaderboardCSA")
+    public List<Person> getLeaderboardCSA() {
+        // Get top 5 users based on cspPoints
+        return repository.findTop5ByOrderByCsaPointsDesc();
     }
 
     /*
@@ -89,21 +97,31 @@ public class PersonApiController {
     /*
     POST Aa record by Requesting Parameters from URI
      */
-    @PostMapping( "/post")
+    @PostMapping("/post")
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
                                              @RequestParam("password") String password,
-                                             @RequestParam("name") String name,
-                                             @RequestParam("dob") String dobString) {
-        Date dob;
-        try {
-            dob = new SimpleDateFormat("MM-dd-yyyy").parse(dobString);
-        } catch (Exception e) {
-            return new ResponseEntity<>(dobString +" error; try MM-dd-yyyy", HttpStatus.BAD_REQUEST);
+                                             @RequestParam("name") String name) {
+    
+        // Check if a person with the same name already exists
+        Person existingPerson = personDetailsService.getByName(name);
+        if (existingPerson != null) {
+            return new ResponseEntity<>("User with name " + name + " already exists", HttpStatus.BAD_REQUEST);
         }
-        // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name, dob);
+
+        // Check if a person with the same email already exists
+        Person existingPersonByEmail = personDetailsService.getByEmail(email);
+        if (existingPersonByEmail != null) {
+            return new ResponseEntity<>("User with email " + email + " already exists", HttpStatus.BAD_REQUEST);
+        }
+    
+        // If no existing person with the same name, create and save the new person
+        int csaPoints = 0;
+        int cspPoints = 0;
+        int profilePicInt = 0;
+        Person person = new Person(email, password, name, csaPoints, cspPoints, profilePicInt);
         personDetailsService.save(person);
-        return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
+    
+        return new ResponseEntity<>(email + " is created successfully", HttpStatus.CREATED);
     }
 
     /*
@@ -151,5 +169,35 @@ public class PersonApiController {
         }
         // return Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+    }
+
+    @PostMapping("/addPointsCSA")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Person> addPointsCSA(@RequestParam("points") int points) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Person person = repository.findByEmail(username);  // Retrieve data for the authenticated user
+        person.setCsaPoints(person.getCsaPoints() + points);
+        repository.save(person);
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
+
+    @PostMapping("/addPointsCSP")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Person> addPointsCSP(@RequestParam("points") int points) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Person person = repository.findByEmail(username);  // Retrieve data for the authenticated user
+        person.setCspPoints(person.getCspPoints() + points);
+        repository.save(person);
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
+
+    @PostMapping("/changeProfilePic")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Person> changeProfilePic(@RequestParam("profilePicInt") int profilePicInt) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Person person = repository.findByEmail(username);
+        person.setProfilePicInt(profilePicInt);
+        repository.save(person);
+        return new ResponseEntity<>(person, HttpStatus.OK);
     }
 }
