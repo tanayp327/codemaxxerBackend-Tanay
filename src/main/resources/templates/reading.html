@@ -26,22 +26,45 @@
             <a th:href="@{/updating}">Update Person</a>
             <a th:href="@{/deleting}">Delete Person</a>
             <div class="row align-items-md-stretch">
+            
+
+            
                 <table class="table">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Email</th>
                         <th>Person</th>
+                        <th>Roles</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="person : ${persons}">
                         <td th:text="${person.id}">Person ID</td>
-                        <td th:text="${person.email}">Birth Email</td>
+                        <td th:text="${person.email}">Email</td>
                         <td th:text="${person.name}">Name</td>
+                        <td><span th:text="${person.roles}">Roles</span></td>
+                        <td>                
+                            <form action="#" th:action = "@{/updateName/{id}(id=${person.id})}" th:object="${person}" method="GET">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name">
+                                
+                            <button type="submit">Update Name</button>
+                        </form>
+                        <form action="#" th:action = "@{/updateEmail/{id}(id=${person.id})}" th:object="${person}" method="GET">
+           
+                            <label for="email">Email:</label>
+                            <input type="Email" id="email" name="email">
+                                
+                            <button type="submit">Update Email</button>
+                        </form>
+                        
+                        <a th:href="@{/update/{id}(id=${person.id})}">Update Person</a>
+
+                    
+                    </td>
                         <td>
                             <a th:href="@{/delete/{id}(id=${person.id})}">Delete</a>
-                            <a th:href="@{/update/{id}(id=${person.id})}">updating</a>
                             <!--- <a th:href="@{/mvc/notes/{id}(id = ${person.id})}">Notes</a> -->
                         </td>
                     </tr>
@@ -54,6 +77,4 @@
 
 </th:block>
 </body>
-
-
 </html>
