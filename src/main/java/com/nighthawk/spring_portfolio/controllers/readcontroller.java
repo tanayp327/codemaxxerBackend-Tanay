@@ -53,18 +53,26 @@ public class readcontroller {
         return "reading";
     }
 
-    @GetMapping("/delete/{id}")
-        public String deletePerson(@PathVariable Long id) {
-            if (id < 7)
-            { 
-            System.out.println("can't delete admins!");
-            return "redirect:/reading";
-         }
-         else {
-            repository.deleteById(id);
-            return "redirect:/reading";
-         }
+    @GetMapping("/reading/delete/{id}")
+    public String deletePerson(@PathVariable Long id) {
+        Optional<Person> optionalPerson = repository.findById(id);
+    
+        if (optionalPerson.isPresent()) {
+            Person person = optionalPerson.get();
+    
+            // Check if the person has admin role
+            boolean isAdmin = person.getRoles().stream()
+                    .anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
+    
+            if (isAdmin) {
+                System.out.println("Can't delete admins!");
+            } else {
+                repository.deleteById(id);
+            }
         }
+    
+        return "redirect:/reading";
+    }
 
 
 
@@ -93,7 +101,7 @@ public class readcontroller {
 // }
 
 // FOR TESTING PURPOSES ONLY
-@GetMapping("/updateName/{id}")
+@PostMapping("/reading/updateName/{id}")
     public String updatePerson(@PathVariable Long id, @RequestParam String name) {
     // Retrieve the existing person from the database
     Optional<Person> optionalPerson = repository.findById(id);
@@ -117,7 +125,7 @@ public class readcontroller {
     }   
 }
 
-@GetMapping("/updateEmail/{id}")
+@PostMapping("/reading/updateEmail/{id}")
     public String updateEmail(@PathVariable Long id, @RequestParam String email) {
     // Retrieve the existing person from the database
     Optional<Person> optionalPerson = repository.findById(id);
