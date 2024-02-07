@@ -68,6 +68,8 @@ public class Person {
     private int csaPoints;
     private int cspPoints;
     private int profilePicInt;
+    private int accountPoints;
+    private int accountLevel;
 
     /* HashMap is used to store JSON for daily "stats"
     "stats": {
@@ -83,13 +85,15 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, int csaPoints, int cspPoints, int profilePicInt) {
+    public Person(String email, String password, String name, int csaPoints, int cspPoints, int profilePicInt, int accountPoints, int accountLevel) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.csaPoints = csaPoints;
         this.cspPoints = cspPoints;
         this.profilePicInt = profilePicInt;
+        this.accountPoints = getAccountPoints();
+        this.accountLevel = getAccountLevel();
     }
 
 
@@ -104,6 +108,7 @@ public class Person {
         p1.setCsaPoints(0);
         p1.setCspPoints(0);
         p1.setProfilePicInt(0);
+        p1.setAccountLevel(1);
 
         Person p2 = new Person();
         p2.setName("Justin Nguyen");
@@ -112,6 +117,7 @@ public class Person {
         p2.setCsaPoints(0);
         p2.setCspPoints(0);
         p2.setProfilePicInt(0);
+        p2.setAccountLevel(1);
 
         Person p3 = new Person();
         p3.setName("Finn Carpenter");
@@ -120,6 +126,7 @@ public class Person {
         p3.setCsaPoints(0);
         p3.setCspPoints(0);
         p3.setProfilePicInt(0);
+        p3.setAccountLevel(1);
 
         Person p4 = new Person();
         p4.setName("Rachit Jaiswal");
@@ -128,6 +135,7 @@ public class Person {
         p4.setCsaPoints(0);
         p4.setCspPoints(0);
         p4.setProfilePicInt(0);
+        p4.setAccountLevel(1);
 
         Person p5 = new Person();
         p5.setName("Luna Iwazaki");
@@ -136,6 +144,7 @@ public class Person {
         p5.setCsaPoints(0);
         p5.setCspPoints(0);
         p5.setProfilePicInt(0);
+        p5.setAccountLevel(1);
 
         Person p6 = new Person();
         p6.setName("Tanisha Patil");
@@ -144,6 +153,7 @@ public class Person {
         p6.setCsaPoints(0);
         p6.setCspPoints(0);
         p6.setProfilePicInt(0);
+        p6.setAccountLevel(1);
 
         Person p7 = new Person();
         p7.setName("TestPlayer");
@@ -152,6 +162,7 @@ public class Person {
         p7.setCsaPoints(0);
         p7.setCspPoints(0);
         p7.setProfilePicInt(0);
+        p7.setAccountLevel(1);
 
         // Array definition and data initialization
         Person persons[] = {p1, p2, p3, p4, p5, p6, p7};
@@ -167,5 +178,4 @@ public class Person {
             System.out.println(person);  // print object
         }
     }
-
 }
