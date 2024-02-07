@@ -17,6 +17,8 @@ public class Person extends Generics{
     private int csaPoints;
     private int cspPoints;
     private int profilePicInt;
+    private int accountPoints;
+    private int accountLevel;
     
 
     // Constructor with zero arguments
@@ -25,7 +27,7 @@ public class Person extends Generics{
     }
 
     // Constructor used when building object from an API
-    public Person(String uid, String password, String name, int csaPoints, int cspPoints, int profilePicInt) {
+    public Person(String uid, String password, String name, int csaPoints, int cspPoints, int profilePicInt, int accountPoints, int accountLevel) {
         this();  // runs zero argument constructor
         this.uid = uid;
         this.password = password;
@@ -33,6 +35,8 @@ public class Person extends Generics{
         this.csaPoints = csaPoints;
         this.cspPoints = cspPoints;
         this.profilePicInt = profilePicInt;
+        this.accountPoints = getAccountPoints();
+        this.accountLevel = getAccountLevel();
     }
 
     /* 'Generics' requires getKey to help enforce KeyTypes usage */
@@ -58,6 +62,8 @@ public class Person extends Generics{
             output += ", csaPoints=" + this.csaPoints;
             output += ", cspPoints=" + this.cspPoints;
             output += ", profilePicInt=" + this.profilePicInt;
+            output += ", accountPoints=" + getAccountPoints();
+            output += ", accountLevel=" + getAccountLevel();
 
         }
         return output;
@@ -108,71 +114,14 @@ public class Person extends Generics{
         this.profilePicInt = profilePicInt;
     }
 
-    // Initialize static test data 
-    public static Person[] init() {
+    // No setter for account points because it should be set on cspPoints and csaPoints
 
-        // basics of class construction
-        Person p1 = new Person();
-        p1.setName("Thomas Edison");
-        p1.setUid("toby@gmail.com");
-        p1.setPassword("123Toby!");
-        p1.setCsaPoints(0);
-        p1.setCspPoints(0);
-        p1.setProfilePicInt(0);
+    public int getAccountPoints() {
+        return cspPoints + csaPoints;
+    }
 
-        Person p2 = new Person();
-        p2.setName("Alexander Graham Bell");
-        p2.setUid("lexb@gmail.com");
-        p2.setPassword("123LexB!");
-        p2.setCsaPoints(0);
-        p2.setCspPoints(0);
-        p2.setProfilePicInt(0);
-
-        Person p3 = new Person();
-        p3.setName("Nikola Tesla");
-        p3.setUid("niko@gmail.com");
-        p3.setPassword("123Niko!");
-        p3.setCsaPoints(0);
-        p3.setCspPoints(0);
-        p3.setProfilePicInt(0);
-
-        Person p4 = null;
-        Person p5 = null;
-        try {
-            p4 = new Person(
-                "madam@gmail.com",
-                "123Madam!",
-                "Madam Currie",
-                0,
-                0,
-                0
-            );
+    public int getAccountLevel() {
+        return accountLevel;
+    }
     
-            p5 = new Person(
-                "jm1021@gmail.com",
-                "123Qwerty!",
-                "John Mortensen",
-                0,
-                0,
-                0
-            );
-        } catch (Exception e) {
-        }
-
-        // Array definition and data initialization
-        Person persons[] = {p1, p2, p3, p4, p5};
-        return(persons);
-    }
-
-    public static void main(String[] args) {
-        // obtain Person from initializer
-        Person persons[] = init();
-        Person.setOrder(Person.KeyType.title);
-
-        // iterate using "enhanced for loop"
-        for( Person person : persons ) {
-            System.out.println(person);  // print object
-        }
-    }
-
 }

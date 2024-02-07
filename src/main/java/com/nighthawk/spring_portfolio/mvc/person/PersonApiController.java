@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping("/api/person")
 public class PersonApiController {
@@ -118,7 +119,9 @@ public class PersonApiController {
         int csaPoints = 0;
         int cspPoints = 0;
         int profilePicInt = 0;
-        Person person = new Person(email, password, name, csaPoints, cspPoints, profilePicInt);
+        int accountPoints = 0;
+        int accountLevel = 1;
+        Person person = new Person(email, password, name, csaPoints, cspPoints, profilePicInt, accountPoints, accountLevel);
         personDetailsService.save(person);
     
         return new ResponseEntity<>(email + " is created successfully", HttpStatus.CREATED);
@@ -170,6 +173,8 @@ public class PersonApiController {
         // return Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
     }
+    
+    
 
     @PostMapping("/addPointsCSA")
     @PreAuthorize("isAuthenticated()")
@@ -177,7 +182,29 @@ public class PersonApiController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Person person = repository.findByEmail(username);  // Retrieve data for the authenticated user
         person.setCsaPoints(person.getCsaPoints() + points);
-        repository.save(person);
+        int accountPointsToBeSet = person.getAccountPoints() + points;
+        person.setAccountPoints(accountPointsToBeSet);
+
+        int[] levels = {0, 100, 221, 354, 500, 661, 839, 1034, 1248, 1485, 1746, 2031, 2345, 2690, 3069, 3483, 3937, 4438, 4994, 5615, 6301, 7064, 7910, 8857, 9914, 11098, 12389, 13800, 15343, 17029};
+
+        int newLevel = 0; // Default level
+
+        for (int i = 0; i < levels.length; i++) {
+            if (accountPointsToBeSet >= levels[i]) {
+                newLevel = i + 1; // Increment level if points meet or exceed the level threshold
+            } else {
+                break; // Break the loop once the current level is determined
+            }
+        }
+        
+        // If points exceed all levels, set the highest level
+        if (accountPointsToBeSet > levels[levels.length - 1]) {
+            newLevel = levels.length;
+        }
+
+        person.setAccountLevel(newLevel);
+
+        repository.save(person);  // Save the updated Person object
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
 
@@ -187,7 +214,29 @@ public class PersonApiController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Person person = repository.findByEmail(username);  // Retrieve data for the authenticated user
         person.setCspPoints(person.getCspPoints() + points);
-        repository.save(person);
+        int accountPointsToBeSet = person.getAccountPoints() + points;
+        person.setAccountPoints(accountPointsToBeSet);
+
+        int[] levels = {0, 100, 221, 354, 500, 661, 839, 1034, 1248, 1485, 1746, 2031, 2345, 2690, 3069, 3483, 3937, 4438, 4994, 5615, 6301, 7064, 7910, 8857, 9914, 11098, 12389, 13800, 15343, 17029};
+
+        int newLevel = 0; // Default level
+
+        for (int i = 0; i < levels.length; i++) {
+            if (accountPointsToBeSet >= levels[i]) {
+                newLevel = i + 1; // Increment level if points meet or exceed the level threshold
+            } else {
+                break; // Break the loop once the current level is determined
+            }
+        }
+        
+        // If points exceed all levels, set the highest level
+        if (accountPointsToBeSet > levels[levels.length - 1]) {
+            newLevel = levels.length;
+        }
+
+        person.setAccountLevel(newLevel);
+
+        repository.save(person);  // Save the updated Person object
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
 
