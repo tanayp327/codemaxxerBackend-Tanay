@@ -11,12 +11,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.hibernate.validator.cfg.defs.EmailDef;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,11 +51,11 @@ public class readcontroller {
         model.addAttribute("persons", persons);
         // System.out.println(persons.toString()); for testing purposes
         return "reading";
-        }
+    }
 
-        @GetMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
         public String deletePerson(@PathVariable Long id) {
-            if(id < 7)
+            if (id < 7)
             { 
             System.out.println("can't delete admins!");
             return "redirect:/reading";
@@ -60,7 +65,81 @@ public class readcontroller {
             return "redirect:/reading";
          }
         }
-        
+
+
+
+//     @GetMapping("/update/{id}")
+//     public String updatePerson(@PathVariable Long id, @RequestParam String name, @RequestParam String email) {
+//     // Retrieve the existing person from the database
+//     Optional<Person> optionalPerson = repository.findById(id);
+
+//     // Check if the person with the given id exists
+//     if (optionalPerson.isPresent()) {
+//         // Update the person's name and email based on the form inputs
+//         Person person = optionalPerson.get();
+//         name = "test";
+//         person.setName(name);
+//         //person.setEmail(email);
+
+//         // Save the updated person to the database
+//         repository.save(person);
+
+//         // Redirect to the reading page after updating
+//         return "redirect:/reading";
+//     } else {
+//         // If the person is not found, redirect to the reading page
+//         return "redirect:/reading";
+//     }   
+// }
+
+// FOR TESTING PURPOSES ONLY
+@GetMapping("/updateName/{id}")
+    public String updatePerson(@PathVariable Long id, @RequestParam String name) {
+    // Retrieve the existing person from the database
+    Optional<Person> optionalPerson = repository.findById(id);
+
+    // Check if the person with the given id exists
+    if (optionalPerson.isPresent()) {
+        // Update the person's name and email based on the form inputs
+        Person person = optionalPerson.get();
+        //String email = "email";
+        person.setName(name);
+        //person.setEmail(email);
+
+        // Save the updated person to the database
+        repository.save(person);
+
+        // Redirect to the reading page after updating
+        return "redirect:/reading";
+    } else {
+        // If the person is not found, redirect to the reading page
+        return "redirect:/reading";
+    }   
+}
+
+@GetMapping("/updateEmail/{id}")
+    public String updateEmail(@PathVariable Long id, @RequestParam String email) {
+    // Retrieve the existing person from the database
+    Optional<Person> optionalPerson = repository.findById(id);
+
+    // Check if the person with the given id exists
+    if (optionalPerson.isPresent()) {
+        // Update the person's name and email based on the form inputs
+        Person person = optionalPerson.get();
+        //String email = "email";
+        person.setEmail(email);
+
+        // Save the updated person to the database
+        repository.save(person);
+
+        // Redirect to the reading page after updating
+        return "redirect:/reading";
+    } else {
+        // If the person is not found, redirect to the reading page
+        return "redirect:/reading";
+    }   
+}
+
 
 
 }
