@@ -6,6 +6,22 @@
 
 <head>    <!-- Page specific head additions -->
     <title>Person List</title>
+    <style>
+        /* Add custom CSS styles here */
+  
+
+        .bg-primary {
+            background-color: #007bff !important;
+        }
+
+        .text-light {
+            color: #f8f9fa !important;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+    </style>
 </head>
 
 <!-- <body> -->
@@ -28,7 +44,7 @@
             
                 <table class="table">
                     <thead>
-                    <tr>
+                    <tr class="bg-primary text-light">
                         <th>ID</th>
                         <th>Email</th>
                         <th>Person</th>
@@ -56,12 +72,11 @@
                             <button type="submit">Update Email</button>
                         </form>
                         
-                        <a th:href="@{/update/{id}(id=${person.id})}">Update Person</a>
 
                     
                     </td>
                         <td>
-                            <a th:href="@{/reading/delete/{id}(id=${person.id})}">Delete</a>
+                            <a th:href="@{/reading/delete/{id}(id=${person.id})}" class="text-danger">Delete</a>
                             <!--- <a th:href="@{/mvc/notes/{id}(id = ${person.id})}">Notes</a> -->
                         </td>
                     </tr>
